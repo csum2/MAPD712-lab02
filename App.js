@@ -14,46 +14,84 @@ import {
   Text,
   TextInput,
   Button,
+  Switch,
   View,
 } from 'react-native';
 
 const App: () => Node = () => {
   const [value, onChangeText] = 	React.useState('Type something here');
+  const [isDarked, setIsDarked] = React.useState(false);
+  const toggleSwitch = () => setIsDarked(previousState => !previousState);
 
   onPress = () => {
     onChangeText('')
   }
 
+  toggleBgdColor = () => {
+    toggleSwitch
+  }
+
   return (
     <SafeAreaView>
-      <View>
-        <TextInput style={styles.editContainer}
+      <View style={isDarked ? styles.darkContainer : styles.lightContainer}>
+      <View style={{ height: '100%' }}>
+        <TextInput style={isDarked ? styles.darkEditContainer : styles.lightEditContainer}
           onChangeText={text => onChangeText(text)}
           clearTextOnFocus={true}
           value={value}
           />
-        <Text>{value}</Text>
-        <Button
+        <Text style={isDarked ? styles.darkContainer : styles.lightContainer}>
+          {value}
+        </Text>
+        <Button style={styles.button}
 	        onPress={this.onPress}
 	        title="Clear"
 	        accessibilityLabel= "Clear Button"
         />
-      </View>
+        <View style={styles.centerContainer}>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isDarked ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isDarked}
+            onChange={this.toggleBgdColor}
+            />
+          </View>
+      </View></View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  editContainer: {
+  lightEditContainer: {
     alignItems: "center",
     justifyContent: "center",
-    borderColor: 'black',
+    color: "black",
+    borderColor: "black",
     borderWidth: 2
   },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  darkEditContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white",
+    borderColor: "white",
+    borderWidth: 2
+  },
+  lightContainer: {
+    backgroundColor: "white",
+    color: "black",
+  },
+  darkContainer: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  centerContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    padding: 20,
   },
 });
 
