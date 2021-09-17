@@ -20,6 +20,10 @@ import {
 const App: () => Node = () => {
   const [value, onChangeText] = 	React.useState('Type something here');
 
+  onPress = () => {
+    onChangeText('')
+  }
+
   return (
     <SafeAreaView>
       <View>
@@ -29,6 +33,11 @@ const App: () => Node = () => {
           value={value}
           />
         <Text>{value}</Text>
+        <Button
+	        onPress={this.onPress}
+	        title="Clear"
+	        accessibilityLabel= "Clear Button"
+        />
       </View>
     </SafeAreaView>
   );
@@ -40,6 +49,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderColor: 'black',
     borderWidth: 2
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 
